@@ -90,12 +90,9 @@ function readall(req, res, payload, cb) {
     );
     }
     else {
-        let whereStart = (limit * page) - 2;
-        let whereEnd;
-        if (page === pages) {
-            whereEnd = articles.length;
-        }
-        else {
+        let whereStart = (limit * page) - limit;
+        let whereEnd = articles.length;
+        if (page !== pages) {
             whereEnd = page * limit;
         }
         resultArticles(whereStart, whereEnd, function (res) {
