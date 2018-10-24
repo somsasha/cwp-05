@@ -11,15 +11,15 @@ function create(req, res, payload, cb) {
         payload.comment = [];
         payload.date = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
         articles.push(payload);
-        fs.writeFile("../articles.json", JSON.stringify(articles), "utf8", function () {
+        fs.writeFile("./articles/articles.json", JSON.stringify(articles), "utf8", function () {
         });
         cb(null, "created");
         logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), msg : "created"});
-        fs.writeFile("../../logs.json", JSON.stringify(logs), "utf8", function () { });
+        fs.writeFile("./logs.json", JSON.stringify(logs), "utf8", function () { });
     }
     else {
         cb(null, "{code: 400, message: Request invalid}");
         logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), msg : "error"});
-        fs.writeFile("../../logs.json", JSON.stringify(logs), "utf8", function () { });
+        fs.writeFile("./logs.json", JSON.stringify(logs), "utf8", function () { });
     }
 }

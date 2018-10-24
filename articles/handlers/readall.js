@@ -130,7 +130,7 @@ function readall(req, res, payload, cb) {
     }
 }
 
-function resultArticles(whereStart, whereEnd, callback) { //формируем нужные статьи
+function resultArticles(whereStart, whereEnd, callback) {
     let result = [];
     for (i = whereStart; i < whereEnd; i++) {
         result.push(articles[i]);

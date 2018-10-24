@@ -19,25 +19,25 @@ function update(req, res, payload, cb) {
                         if (payload.date !== undefined)
                             articles[i].date = payload.date;
                         let result = articles[i];
-                        fs.writeFile("../articles.json", JSON.stringify(articles), "utf8", function () {
+                        fs.writeFile("./articles/articles.json", JSON.stringify(articles), "utf8", function () {
                         });
                         cb(null, "update");
                         logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), msg : "updated"});
-                        fs.writeFile("../../logs.json", JSON.stringify(logs), "utf8", function () { });                        
+                        fs.writeFile("./logs.json", JSON.stringify(logs), "utf8", function () { });                        
                     }
                 }
             },
             error => {
                 cb({code: 404, message: 'Not found'});
                 logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), msg : "error"});
-                fs.writeFile("../../logs.json", JSON.stringify(logs), "utf8", function () { });                
+                fs.writeFile("./logs.json", JSON.stringify(logs), "utf8", function () { });                
             }
         )
     }
     else {
         cb(null, "{code: 400, message: Request invalid}");
         logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), msg : "error"});
-        fs.writeFile("../../logs.json", JSON.stringify(logs), "utf8", function () { });        
+        fs.writeFile("./logs.json", JSON.stringify(logs), "utf8", function () { });        
     }
 }
 

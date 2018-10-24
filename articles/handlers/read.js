@@ -13,5 +13,5 @@ function read(req, res, payload, cb) {
     }
     cb(null, result);
     logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), msg : "readed"});
-    fs.writeFile("../../logs.json", JSON.stringify(logs), "utf8", function () { });    
+    fs.writeFile("./logs.json", JSON.stringify(logs), "utf8", function () { });    
 }

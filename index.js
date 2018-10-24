@@ -3,6 +3,8 @@ const fs = require('fs');
 
 const articles = require('./articles/handlers/articles_handler');
 const comments = require('./comments/handlers/comments_handler');
+const logs_handler = require('./logs_handler');
+const json_tryparse = require('./helpers/jsonparse_helper');
 let logs = require("./logs.json");
 
 const hostname = '127.0.0.1';
@@ -16,7 +18,8 @@ const handlers = {
   '/api/articles/create': articles.create,
   '/api/articles/delete': articles.delet,
   '/api/comments/create': comments.create,
-  '/api/comments/delete': comments.delet
+  '/api/comments/delete': comments.delet,
+  '/api/logs':logs_handler
 };
 
 const server = http.createServer((req, res) => {
@@ -63,6 +66,9 @@ function sum(req, res, payload, cb) {
 
 function notFound(req, res, payload, cb) {
   cb({ code: 404, message: 'Not found'});
+  let d = new Date();
+  logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), code: 404, message: 'Not found'});
+  fs.writeFile("./logs.json", JSON.stringify(logs), "utf8", function () { });
 }
 
 function parseBodyJson(req, cb) {
@@ -73,7 +79,7 @@ function parseBodyJson(req, cb) {
   }).on('end', function() {
     body = Buffer.concat(body).toString();
     let d = new Date();
-    logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), req : JSON.tryparse(body)});
+    logs.push({date : d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "-" + d.getHours() + ":" + d.getMinutes(), req : json_tryparse(body)});
     fs.writeFile("./logs.json", JSON.stringify(logs), "utf8", function () { });
     try {
       params = JSON.parse(body);
